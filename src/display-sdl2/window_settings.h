@@ -1,0 +1,13 @@
+#ifndef _WINDOW_INIT_H
+#define _WINDOW_INIT_H
+
+#include <SDL2/SDL.h>
+
+#define WINDOW_TITLE "AI-Checkers"
+#define WINDOW_POS_X SDL_WINDOWPOS_CENTERED
+#define WINDOW_POS_Y SDL_WINDOWPOS_CENTERED
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 480
+
+
+#endif // _WINDOW_INIT_H
