@@ -1,8 +1,25 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#include <SDL2/SDL.h>
+#include "board.h"
+#include <stdbool.h>
 
-int window_init(void);
+enum Response {
+	ONGOING,
+	LOST,
+	WIN
+};
+
+enum Color {
+	NONE,
+	RED,
+	BLUE
+};
+
+void *initBoard(void);
+void drawBoard(void *display, int board[][]);
+void deleteBoard(void *display);
+
+enum Response AI_Solve(int board[][]);
 
 #endif // _MAIN_H
