@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-Wall -Wextra -Wpedantic 
+CFLAGS:=-Wall -Wextra -Wpedantic -O3
 LD:=gcc
 LDFLAGS:=-lSDL2 -lSDL2_image
 

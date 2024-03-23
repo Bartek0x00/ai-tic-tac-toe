@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "initBoard.h"
+#include "images.h"
 
 void *initBoard()
 {
@@ -55,7 +56,13 @@ void *initBoard()
 	}
 
 	SDL_Surface *surface;
-	surface = IMG_Load("src/display-sdl2/background.png");
+	surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			background_png, 
+			background_png_len 
+		),
+		1
+	);
 	if(surface == NULL) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
@@ -78,7 +85,13 @@ void *initBoard()
 		exit(EXIT_FAILURE);
 	}
 
-	surface = IMG_Load("src/display-sdl2/circle.png");
+	surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			circle_png,
+			circle_png_len
+		),
+		1
+	);
 	if (surface == NULL) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
@@ -101,7 +114,13 @@ void *initBoard()
 		exit(EXIT_FAILURE);
 	}
 
-	surface = IMG_Load("src/display-sdl2/cross.png");
+	surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			cross_png,
+			cross_png_len
+		),
+		1
+	);
 	if (surface == NULL) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
@@ -122,11 +141,7 @@ void *initBoard()
 		);
 		exit(EXIT_FAILURE);
 	}
-
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, background, NULL, NULL);
-	SDL_RenderPresent(renderer);
-
+	
 	Display *display = malloc(sizeof(Display));
 	if (display == NULL) {
 		fprintf(

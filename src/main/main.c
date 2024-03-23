@@ -1,50 +1,45 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include "main.h"
 #include <time.h>
+#include "main.h"
 
 int main()
 {
-	int color = 0;
-	srand(time(0));
-	switch (rand() % 2) {
-		case 0:
-			color = RED;
-		case 1:
-			color = BLUE;
-	}
-
 	void *display = initBoard(); 
 
-	bool isRunning = true;
 	char input = '\0';
-
-	while (isRunning) {
+	
+	unsigned int board[9] = {
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0
+	};
+	while (true) {
+		drawBoard(display, board);
+	}
+	/*
+	while (1) {
 		drawBoard(display, board);
 		if (scanf(" %c", &input) != 1) continue;
-		/*if (input_occured) {
-			// handle input, change Board according to input
-			switch(AI_Solve(&board)) {
-			case WON:
-				[[unlikely]]
-				break;
-			case LOST:
-				break;
-			case NONE:
-				[[fallthrough]]
-			default:
-				[[likely]]
-				continue;
-			}
-			// handle AI output, change Board accordingly
-		}*/
 		if (input == 'q') {
 			deleteBoard(display);
 			free(display);
-			isRunning = false;
+			break;
+		} else if (input >= '0' && input <= '8') {
+			board[input - '0']++;
 		}
-	}
+		while (getchar() != '\n');
+		// handle input, change Board according to input
+		switch(AI_Solve(&board)) {
+			case WON:
+				break;
+			case LOST:
+				break;
+			default:
+				continue;
+		}
+		// handle AI output, change Board accordingly
+	}*/
 	return 0;
 }

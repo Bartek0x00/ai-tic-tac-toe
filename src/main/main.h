@@ -17,9 +17,9 @@ enum Color {
 };
 
 void *initBoard(void);
-void drawBoard(void *display, int board[][]);
+void drawBoard(void *display, unsigned int board[]);
 void deleteBoard(void *display);
 
-enum Response AI_Solve(int board[][]);
+enum Response AI_Solve(unsigned int board[]);
 
 #endif // _MAIN_H
