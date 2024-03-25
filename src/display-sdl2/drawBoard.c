@@ -11,8 +11,7 @@ void drawBoard(void *buffer, unsigned int board[])
 		NULL,
 		NULL
 	);
-	SDL_RenderPresent(display->renderer);
-/*
+	
 	int count = 0;
 
 	for (int i = 0; i < 3; i++) {
@@ -37,5 +36,5 @@ void drawBoard(void *buffer, unsigned int board[])
 			count++;
 		}
 	}
-	SDL_RenderPresent(display->renderer);*/
+	SDL_RenderPresent(display->renderer);
 }

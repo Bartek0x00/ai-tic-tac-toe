@@ -154,6 +154,7 @@ void *initBoard()
 	*display = (Display){
 		.window = window,
 		.renderer = renderer,
+		.background = background,
 		.circle = circle,
 		.cross = cross
 	};

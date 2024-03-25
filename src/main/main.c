@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
 #include "main.h"
@@ -15,10 +14,15 @@ int main()
 		0, 0, 0,
 		0, 0, 0
 	};
-	while (true) {
-		drawBoard(display, board);
-	}
-	/*
+	
+	srand(time(0));
+	Color playerColor = (rand() % 2) + 1;
+
+	if (playerColor == RED)
+		printf("%sYou're red cross X%s\n", T_RED, T_CLR);
+	else
+		printf("%sYou're blue circle O%s\n", T_BLUE, T_CLR);
+
 	while (1) {
 		drawBoard(display, board);
 		if (scanf(" %c", &input) != 1) continue;
@@ -26,11 +30,11 @@ int main()
 			deleteBoard(display);
 			free(display);
 			break;
-		} else if (input >= '0' && input <= '8') {
-			board[input - '0']++;
+		} else if (input >= '0' && input <= '8' && !board[input - '0']) {
+			board[input - '0'] = playerColor;
 		}
 		while (getchar() != '\n');
-		// handle input, change Board according to input
+		/* 
 		switch(AI_Solve(&board)) {
 			case WON:
 				break;
@@ -39,7 +43,7 @@ int main()
 			default:
 				continue;
 		}
-		// handle AI output, change Board accordingly
-	}*/
+		*/
+	}
 	return 0;
 }
