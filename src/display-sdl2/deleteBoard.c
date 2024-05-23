@@ -1,9 +1,9 @@
 #include "display.h"
 #include <SDL2/SDL_image.h>
 
-void deleteBoard(void *input)
+void deleteBoard(void *displayRaw)
 {
-	Display *display = (Display *)input;
+	Display *display = (Display *)displayRaw;
 	SDL_DestroyTexture(display->circle);
 	SDL_DestroyTexture(display->cross);
 	SDL_DestroyTexture(display->background);
@@ -11,4 +11,5 @@ void deleteBoard(void *input)
 	SDL_DestroyWindow(display->window);
 	IMG_Quit();
 	SDL_Quit();
+	free(display);
 }

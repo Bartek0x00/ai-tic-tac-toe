@@ -1,12 +1,14 @@
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "initBoard.h"
+#include "window.h"
 #include "images.h"
 
 void *initBoard()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Log(
 			"Failed to initialize SDL: %s", 
 			SDL_GetError()

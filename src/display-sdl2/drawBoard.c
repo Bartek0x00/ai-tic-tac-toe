@@ -1,9 +1,10 @@
 #include <stdbool.h>
-#include "initBoard.h"
+#include "window.h"
+#include "display.h"
 
-void drawBoard(void *buffer, unsigned int board[])
+void drawBoard(void *displayRaw, unsigned int board[])
 {
-	Display *display = (Display *)buffer;
+	Display *display = (Display *)displayRaw;
 	
 	SDL_RenderCopy(
 		display->renderer,
