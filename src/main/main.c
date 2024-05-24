@@ -14,9 +14,9 @@ int main()
 	AI_Color playerColor = (rand() % 2) + 1;
 
 	if (playerColor == RED) 
-		printf("%s%sYou're red cross X%s\n", T_RED, B_GREY, T_CLR);
+		printf("%sYou're red cross X%s\n", T_RED, T_CLR);
 	else {
-		printf("%s%sYou're blue circle O%s\n", T_BLUE, B_GREY, T_CLR);
+		printf("%sYou're blue circle O%s\n", T_BLUE, T_CLR);
 		goto Algorithm;
 	}
 

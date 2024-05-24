@@ -1,8 +1,9 @@
 #include <stdbool.h>
+#include "../AI/Board.h"
 #include "window.h"
 #include "display.h"
 
-void drawBoard(void *displayRaw, unsigned int board[])
+void drawBoard(void *displayRaw, Board board)
 {
 	Display *display = (Display *)displayRaw;
 	
@@ -25,10 +26,10 @@ void drawBoard(void *displayRaw, unsigned int board[])
 				200
 			};
 
-			if (board[count]) {
+			if (Board_GET(board, count)) {
 				SDL_RenderCopy(
 					display->renderer,
-					board[count] == 1 ? display->cross : 
+					Board_GET(board, count) == 1 ? display->cross : 
 					display->circle,
 					NULL,
 					&destination

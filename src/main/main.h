@@ -6,10 +6,8 @@
 #include "../AI/Board.h"
 
 #define T_CLR "\033[0m"
-#define B_GREY "\033[48;5;0m"
 #define T_RED "\033[38;5;1m"
 #define T_BLUE "\033[38;5;4m"
-
 
 void *initBoard(void);
 int getEvent(char *output);
