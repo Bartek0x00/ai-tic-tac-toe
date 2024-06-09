@@ -6,7 +6,7 @@
 #include "window.h"
 #include "images.h"
 
-void *initBoard()
+void *initDisplay(void)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Log(

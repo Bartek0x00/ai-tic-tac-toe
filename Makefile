@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-Wall -Wextra -Wpedantic -O3
+CFLAGS:=-Wall -O3
 LD:=gcc
 LDFLAGS:=-lSDL2 -lSDL2_image
 
@@ -17,6 +17,7 @@ run: link
 
 link: $(OBJS)
 	$(LD) $^ -o $(EXEC) $(LDFLAGS)
+	make clean
 
 clean:
 	rm -f $(OBJS)

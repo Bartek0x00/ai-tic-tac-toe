@@ -1,7 +1,7 @@
 #include "display.h"
 #include <SDL2/SDL_image.h>
 
-void deleteBoard(void *displayRaw)
+void deleteDisplay(void *displayRaw)
 {
 	Display *display = (Display *)displayRaw;
 	SDL_DestroyTexture(display->circle);

@@ -2,9 +2,9 @@
 #define _AI_COLOR
 
 typedef enum {
-	NONE = 0x0,
-	RED = 0x1,
-	BLUE = 0x2
-} AI_Color;
+	NONE = 0b00,
+	RED = 0b01,
+	BLUE = 0b10
+} Color;
 
 #endif //_AI_COLOR
