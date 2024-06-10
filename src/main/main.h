@@ -14,6 +14,6 @@ extern int getEvent(unsigned char *output);
 extern void drawDisplay(void *display, Board board);
 extern void deleteDisplay(void *display);
 
-extern Color Solve(Board board);
+extern Board solve(Board board, Color color);
 
 #endif // _MAIN_H

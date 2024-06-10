@@ -11,35 +11,24 @@ int main(void)
 	unsigned char input = '\0';
 	unsigned int remainingMoves = 9;
 	register Board board = Board_EMPTY;	
-	drawDisplay(display, board);	
 	srand(time(0));
 	Color playerColor = (rand() % 2) + 1;
 
-	if (playerColor == RED) 
+	if (playerColor == RED) {
 		printf("%sYou're red cross X%s\n", T_RED, T_CLR);
-	else {
+		goto User;
+	} else {
 		printf("%sYou're blue circle O%s\n", T_BLUE, T_CLR);
-		goto Algorithm;
 	}
 
-	while (remainingMoves) {
-		while(getEvent(&input));
-		if (input == 'q') {
-			goto Exit;
-		} else if (input >= '0' && input <= '8') {
-			input -= '0';
-			if(!Board_Get(board, input)) {
-				board = Board_Set(board, input, playerColor);
-				remainingMoves--;
-			}
-		}		
-		drawDisplay(display, board);	
-		Algorithm:
+	while (remainingMoves) {	
+		drawDisplay(display, board);
 		switch(Board_GetWinner(board)) {
 		case NONE:
 			if (remainingMoves) {
-				board = Solve(board);
-				continue;
+				board = solve(board, (playerColor ^ 0b11));
+				remainingMoves--;
+				goto User;
 			}
 			printf("%sIt's a TIE%s\n", T_GREEN, T_CLR);
 			goto Exit;
@@ -56,7 +45,21 @@ int main(void)
 				printf("%sYou've lost%s\n", T_RED, T_CLR);
 			goto Exit;
 		}
+
+		User:
+		drawDisplay(display, board);
+		while(!getEvent(&input));
+		if (input == 'q') {
+			goto Exit;
+		} else if (input >= '0' && input <= '8') {
+			input -= '0';
+			if(!Board_Get(board, input)) {
+				board = Board_Set(board, input, playerColor);
+				remainingMoves--;
+			}
+		}		
 	}
+
 Exit:
 	deleteDisplay(display);
 	return 0;
