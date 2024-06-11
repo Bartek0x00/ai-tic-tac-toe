@@ -3,32 +3,47 @@
 #include "Board.h"
 #include "Color.h"
 
-static int negamax(Board board, int depth, Color color)
+#define TO_SIGNED(x) (((x) == 1) ? -1 : 1)
+
+static int negamax(Board board, Color color)
 {
-	int score = Board_GetWinner(board);
-	if (score == 1) score = -1;
-	if (score == 2) score = 1;
-	if (!score || depth >= 3) return color * score;
+	int eval = Board_GetWinner(board);
+	if (eval != 0)
+		return TO_SIGNED(eval) * TO_SIGNED(color);
 	
-	int bestVal = INT_MIN;
+	int bestScore = INT_MIN;
 	for (int i = 0; i < 9; i++) {
 		if (!Board_Get(board, i)) {
-			board = Board_Set(board, i, color);
-			
-			int value = -negamax(board, ++depth, (color ^ 0b11));
-			
-			board = Board_Set(board, i, NONE);
+			int score = -negamax(
+				Board_Set(board, i, color),
+				(color ^ 0b11)
+			);
 
-			if (value > bestVal)
-				bestVal = value;
+			if (score > bestScore)
+				bestScore = score;
 		}
 	}
-	return bestVal;
+	return bestScore;
 }
 
 Board solve(Board board, Color color)
 {
-	Board ret = Board_Set(board, negamax(board, 0, color), color);
-	printf("%u", ret);
-	return ret;
+	int bestScore = INT_MIN;
+	int bestMove = -1;
+
+	for (int i = 0; i < 9; i++) {
+		if (!Board_Get(board, i)) {
+			int score = -negamax(
+				Board_Set(board, i, color),
+				(color ^ 0b11)
+			);
+
+			if (score > bestScore) {
+				bestScore = score;
+				bestMove = i;
+			} 
+		}
+	}
+	printf("bestMove: %u\n", bestMove);
+	return Board_Set(board, bestMove, color);
 }

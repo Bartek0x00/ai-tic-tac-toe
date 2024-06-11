@@ -9,7 +9,7 @@ extern const Board Board_EMPTY;
 extern const Board Board_WIN_RED[8];
 extern const Board Board_WIN_BLUE[8];
 
-extern const Color Board_GetWinner(Board board);
+extern Color Board_GetWinner(Board board);
 
 inline Board Board_Get(Board board, int index) 
 {

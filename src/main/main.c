@@ -27,8 +27,8 @@ int main(void)
 		case NONE:
 			if (remainingMoves) {
 				board = solve(board, (playerColor ^ 0b11));
-				remainingMoves--;
-				goto User;
+				if (--remainingMoves)
+					goto User;
 			}
 			printf("%sIt's a TIE%s\n", T_GREEN, T_CLR);
 			goto Exit;
@@ -56,6 +56,7 @@ int main(void)
 			if(!Board_Get(board, input)) {
 				board = Board_Set(board, input, playerColor);
 				remainingMoves--;
+				printf("user: %u\n", input);
 			}
 		}		
 	}
