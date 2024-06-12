@@ -27,7 +27,9 @@ int main(void)
 		if (winner) {
 			printf("You've lost");
 			break;
-		} else if (remainingMoves--) {
+		} 
+		
+		if (remainingMoves--) {
 			board = solve(
 				board, 
 				(playerColor ^ 0b11)
