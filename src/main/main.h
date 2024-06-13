@@ -12,6 +12,7 @@ extern void *initDisplay(void);
 extern int getEvent(unsigned char *output);
 extern void drawDisplay(void *display, Board board);
 extern void deleteDisplay(void *display);
+extern void showText(void *display, char *text);
 
 extern Board solve(Board board, Color color);
 

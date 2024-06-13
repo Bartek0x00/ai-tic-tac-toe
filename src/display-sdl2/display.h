@@ -2,6 +2,7 @@
 #define _DISPLAY_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 typedef struct {
 	SDL_Renderer *renderer;
@@ -9,6 +10,7 @@ typedef struct {
 	SDL_Texture *background;
 	SDL_Texture *circle;
 	SDL_Texture *cross;
+	TTF_Font *font;
 } Display;
 
 #endif // _DISPLAY_H

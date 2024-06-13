@@ -1,7 +1,7 @@
 CC:=gcc
 CFLAGS:=-Wall -O3
 LD:=gcc
-LDFLAGS:=-lSDL2 -lSDL2_image
+LDFLAGS:=-lSDL2 -lSDL2_image -lSDL2_ttf
 
 SRC_DIRS:=$(wildcard src/*/)
 SRCS:=$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)*.c))
