@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "window.h"
 #include "images.h"
 
@@ -12,7 +13,14 @@ void *initDisplay(void)
 		);
 		exit(-1);
 	}
-
+	if (!IMG_Init(IMG_INIT_PNG)) {
+		SDL_Log(
+			"Failed to initialize IMG: %s",
+			SDL_GetError()
+		);
+		SDL_Quit();
+		exit(-1);
+	}
 	SDL_Window *window = SDL_CreateWindow(
 		WINDOW_TITLE,
 		WINDOW_POS_X,
@@ -45,29 +53,19 @@ void *initDisplay(void)
 		exit(-1);
 	}
 
-	SDL_RWops *rw = SDL_RWFromConstMem(
-		background_bmp, 
-		background_bmp_len
+	SDL_Surface *surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			background_png,
+			background_png_len
+		),
+		1
 	);
-	if (!rw) {
-		SDL_Log(
-			"Failed to create RWops from memory: %s",
-			SDL_GetError()
-		);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		exit(-1);
-	}
-
-	SDL_Surface *surface = SDL_LoadBMP_RW(rw, 1);
 	if(!surface) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
-			"background.bmp",
+			"background.png",
 			SDL_GetError()
 		);
-		SDL_RWclose(rw);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
@@ -75,14 +73,13 @@ void *initDisplay(void)
 	}
 
 	SDL_Texture *background = SDL_CreateTextureFromSurface(
-		renderer,
-		surface
+		renderer, surface
 	);
 	SDL_FreeSurface(surface);
 	if (!background) {
 		SDL_Log(
 			"Failed to create a texture from %s\n %s",
-			"background.bmp",
+			"background.png",
 			SDL_GetError()
 		);
 		SDL_DestroyRenderer(renderer);
@@ -91,29 +88,19 @@ void *initDisplay(void)
 		exit(-1);
 	}
 	
-	rw = SDL_RWFromConstMem(
-		cross_bmp, 
-		cross_bmp_len
+	surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			cross_png,
+			cross_png_len
+		),
+		1
 	);
-	if (!rw) {
-		SDL_Log(
-			"Failed to create RWops from memory: %s",
-			SDL_GetError()
-		);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		exit(-1);
-	}
-
-	surface = SDL_LoadBMP_RW(rw, 1);
 	if(!surface) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
-			"cross.bmp",
+			"cross.png",
 			SDL_GetError()
 		);
-		SDL_RWclose(rw);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
@@ -121,8 +108,7 @@ void *initDisplay(void)
 	}
 
 	SDL_Texture *cross = SDL_CreateTextureFromSurface(
-		renderer,
-		surface
+		renderer, surface
 	);
 	SDL_FreeSurface(surface);
 	if (!cross) {
@@ -136,30 +122,20 @@ void *initDisplay(void)
 		SDL_Quit();
 		exit(-1);
 	}
-		
-	rw = SDL_RWFromConstMem(
-		circle_bmp, 
-		circle_bmp_len
-	);
-	if (!rw) {
-		SDL_Log(
-			"Failed to create RWops from memory: %s",
-			SDL_GetError()
-		);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		exit(-1);
-	}
 
-	surface = SDL_LoadBMP_RW(rw, 1);
+	surface = IMG_Load_RW(
+		SDL_RWFromMem(
+			circle_png,
+			circle_png_len
+		),
+		1
+	);
 	if(!surface) {
 		SDL_Log(
 			"Failed to load an image %s\n %s",
-			"circle.bmp",
+			"circle.png",
 			SDL_GetError()
 		);
-		SDL_RWclose(rw);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
@@ -183,7 +159,7 @@ void *initDisplay(void)
 	}
 	
 	Display *display = malloc(sizeof(Display));
-	if (display == NULL) {
+	if (!display) {
 		SDL_Log("Failed to allocate memory for the display\n");
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);

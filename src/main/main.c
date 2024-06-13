@@ -21,26 +21,27 @@ int main(void)
 		printf("%sYou're blue circle O%s\n", T_BLUE, T_CLR);
 	}
 
-	while (remainingMoves) {	
+	while (1) {
 		drawDisplay(display, board);
 		Color winner = Board_GetWinner(board);
+
 		if (winner) {
-			printf("You've lost");
-			break;
-		} 
-		
-		if (remainingMoves--) {
-			board = solve(
-				board, 
-				(playerColor ^ 0b11)
-			);
-			if (remainingMoves) goto User;
-		} else {
-			printf("%sIt's a tie%s", T_GREEN, T_CLR);
+			printf("%sYou've lost%s", T_RED, T_CLR);
 			break;
 		}
 
-		User:
+		if (!remainingMoves) {
+			printf("%sIt's a tie%s", T_BLUE, T_CLR);	
+			break;
+		}
+
+		board = solve(
+			board, 
+			(playerColor ^ 0b11)
+		);
+		if (!(--remainingMoves) || Board_GetWinner(board)) continue;
+
+	User:
 		drawDisplay(display, board);
 		while(!getEvent(&input));
 
@@ -48,6 +49,8 @@ int main(void)
 		if (!Board_Get(board, input)) {
 			board = Board_Set(board, (input - '0'), playerColor);
 			remainingMoves--;
+		} else {
+			goto User;
 		}		
 	}
 

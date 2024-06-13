@@ -52,6 +52,5 @@ Board solve(Board board, Color color)
 			} 
 		}
 	}
-	printf("bestMove: %u\n", bestMove);
 	return Board_Set(board, bestMove, color);
 }

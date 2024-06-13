@@ -7,7 +7,6 @@
 #define T_CLR   "\033[0m"
 #define T_RED   "\033[38;5;1m"
 #define T_BLUE  "\033[38;5;4m"
-#define T_GREEN "\033[38;5;2m"
 
 extern void *initDisplay(void);
 extern int getEvent(unsigned char *output);
