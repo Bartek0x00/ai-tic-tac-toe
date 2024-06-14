@@ -1,0 +1,4 @@
+void deleteDisplay(void *display)
+{
+	
+}

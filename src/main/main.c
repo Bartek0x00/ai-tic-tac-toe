@@ -10,6 +10,7 @@ int main(void)
 	unsigned char input = '\0';
 	char buffer[32] = {'\0'};
 	unsigned int remainingMoves = 9;
+	unsigned int gameOver = 0;
 	register Board board = Board_EMPTY;	
 	srand(time(0));
 	Color playerColor = (rand() % 2) + 1;
@@ -25,11 +26,13 @@ int main(void)
 
 		if (winner) {
 			showText(display, "You've lost\n", RED);
+			gameOver = 1;
 			goto User;
 		}
 
 		if (!remainingMoves) {
 			showText(display, "It's a tie\n", BLUE);	
+			gameOver = 1;
 			goto User;
 		}
 		
@@ -57,6 +60,7 @@ int main(void)
 		while(!getEvent(&input));
 
 		if (input == 'q') break;
+		if (gameOver) goto User;
 		if (!Board_Get(board, (input - '0'))) {
 			board = Board_Set(board, (input - '0'), playerColor);
 			remainingMoves--;
