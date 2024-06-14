@@ -24,7 +24,7 @@ bool getEvent(unsigned char *output)
 				event.motion.x,
 				event.motion.y
 			);
-			return true;		
+			if (*output >= '0' && *output <= '8') return true;	
 		}
 	}
 	return false;

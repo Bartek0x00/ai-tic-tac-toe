@@ -7,22 +7,28 @@ void drawDisplay(void *displayRaw, Board board)
 {
 	Display *display = (Display *)displayRaw;
 	
+	SDL_Rect background = {
+		0, 
+		0,
+		WINDOW_SIZE,
+		WINDOW_SIZE
+	};
 	SDL_RenderCopy(
 		display->renderer,
 		display->background,
 		NULL,
-		NULL
+		&background
 	);
 	
 	int count = 0;
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			SDL_Rect destination = {
-				j * CELL_SIZE,
+			SDL_Rect cell = {
+				j * CELL_SIZE, 
 				i * CELL_SIZE,
-				200,
-				200
+				CELL_SIZE, 
+				CELL_SIZE
 			};
 
 			if (Board_Get(board, count)) {
@@ -32,7 +38,7 @@ void drawDisplay(void *displayRaw, Board board)
 					display->cross : \
 					display->circle,
 					NULL,
-					&destination
+					&cell
 				);
 			}
 			count++;

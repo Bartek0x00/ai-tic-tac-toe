@@ -8,16 +8,15 @@ int main(void)
 {
 	void *display = initDisplay(); 
 	unsigned char input = '\0';
+	char buffer[32] = {'\0'};
 	unsigned int remainingMoves = 9;
 	register Board board = Board_EMPTY;	
 	srand(time(0));
 	Color playerColor = (rand() % 2) + 1;
 
 	if (playerColor == RED) {
-		showText(display, "You're red cross X\n");
+		showText(display, "You're red cross X\n", RED);
 		goto User;
-	} else {
-		showText(display, "You're blue circle O\n");
 	}
 
 	while (1) {
@@ -25,13 +24,13 @@ int main(void)
 		Color winner = Board_GetWinner(board);
 
 		if (winner) {
-			printf("%sYou've lost%s\n", T_RED, T_CLR);
-			break;
+			showText(display, "You've lost\n", RED);
+			goto User;
 		}
 
 		if (!remainingMoves) {
-			printf("%sIt's a tie%s\n", T_BLUE, T_CLR);	
-			break;
+			showText(display, "It's a tie\n", BLUE);	
+			goto User;
 		}
 		
 		struct timespec startTime, endTime;
@@ -43,11 +42,14 @@ int main(void)
 		);
 		
 		clock_gettime(CLOCK_MONOTONIC, &endTime);
-		printf(
-			"Solve time: %ldµs\n", 
-			(endTime.tv_nsec - startTime.tv_nsec) / 1000
+
+		sprintf(
+			buffer,
+			"Solve time: %ens\n", 
+			(double)(endTime.tv_nsec - startTime.tv_nsec)
 		);
-		
+		showText(display, buffer, NONE);
+
 		if (!(--remainingMoves) || Board_GetWinner(board)) continue;
 
 	User:
@@ -55,7 +57,7 @@ int main(void)
 		while(!getEvent(&input));
 
 		if (input == 'q') break;
-		if (!Board_Get(board, input)) {
+		if (!Board_Get(board, (input - '0'))) {
 			board = Board_Set(board, (input - '0'), playerColor);
 			remainingMoves--;
 		} else {

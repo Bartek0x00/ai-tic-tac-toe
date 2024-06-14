@@ -4,6 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "window.h"
 #include "images.h"
+#include "font.h"
 
 static SDL_Texture *loadTexture(SDL_Window *window,
 								SDL_Renderer *renderer, 
@@ -136,7 +137,17 @@ void *initDisplay(void)
 		"circle.png"
 	);				
 
-	TTF_Font *font = TTF_OpenFont(NULL, 24);
+	SDL_RWops *rw = SDL_RWFromMem(font_ttf, font_ttf_len);
+	if (!rw) {
+		SDL_Log("Failed to make rw: %s\n", SDL_GetError());
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+		TTF_Quit();
+		IMG_Quit();
+		SDL_Quit();
+		exit(-1);
+	}
+	TTF_Font *font = TTF_OpenFontRW(rw, 1, 64);
 	if (!font) {
 		SDL_Log("Failed to load font: %s\n", TTF_GetError());
 		SDL_DestroyRenderer(renderer);
