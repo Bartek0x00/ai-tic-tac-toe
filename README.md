@@ -1,1 +1,2 @@
-Tic Tac Toe driven by AI
+Tic Tac Toe game made entirely in C.
+

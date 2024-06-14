@@ -45,8 +45,8 @@ int main(void)
 
 		sprintf(
 			buffer,
-			"Solve time: %ens\n", 
-			(double)(endTime.tv_nsec - startTime.tv_nsec)
+			"Solve time: %ldns\n", 
+			(endTime.tv_nsec - startTime.tv_nsec)
 		);
 		showText(display, buffer, NONE);
 
