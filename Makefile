@@ -24,4 +24,4 @@ link:
 	$(MAKE) clean
 
 clean:
-	rm -rf (SRCS:.c=.o) (DISPLAY_SRCS:.c=.o)
+	rm -rf src/*.o
