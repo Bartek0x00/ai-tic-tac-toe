@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <unistd.h>
+#include <sys/ioctl.h>
 
 int getEvent(unsigned char *output)
 {
 	scanf("%c", output);
-	ioctl(stdin, TCFLSH, TCIFLUSH);
-	if (*output == 'q') return true;
-	if ((*output >= '0') && (*output <= '8')) return true;
-	return false;
+	ioctl(0, 0x540b, 0);
+	if (*output == 'q') return 1;
+	if ((*output >= '0') && (*output <= '8')) return 1;
+	return 0;
 }

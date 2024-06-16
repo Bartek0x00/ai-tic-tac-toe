@@ -56,7 +56,7 @@ int main(void)
 		if (!(--remainingMoves) || Board_GetWinner(board)) continue;
 
 	User:
-		drawDisplay(display, board);
+		drawDisplay(display, board); 
 		while(!getEvent(&input));
 
 		if (input == 'q') break;

@@ -1,26 +1,27 @@
 CC:=gcc
 CFLAGS:=-Wall -O3
-LD:=gcc
-LDFLAGS:=-lSDL2 -lSDL2_image -lSDL2_ttf
 
-SRC_DIRS:=$(wildcard src/*/)
-SRCS:=$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)*.c))
-OBJS:=$(SRCS:.c=.o)
-EXEC:=main
+SRCS:=$(wildcard src/main/*.c) $(wildcard src/AI/*.c) 
+DISPLAY_SRCS:=
+EXEC:=tictactoe
 
-.PHONY: all clean
+.PHONY: all clean help tui sdl2 tictactoe
 
-all: run
+all: help
 
-run: link
-	./main
+help:
+	@echo "Usage: make [sdl2|tui]"
 
-link: $(OBJS)
-	$(LD) $^ -o $(EXEC) $(LDFLAGS)
-	make clean
+tui: DISPLAY_SRCS = $(wildcard src/display-tui/*.c)
+tui: link
+
+sdl2: DISPLAY_SRCS = $(wildcard src/display-sdl2/*.c)
+sdl2: CFLAGS += -lSDL2 -lSDL2_image -lSDL2_ttf
+sdl2: link
+
+link:
+	$(CC) $(CFLAGS) -o $(EXEC) $(SRCS) $(DISPLAY_SRCS)
+	$(MAKE) clean
 
 clean:
-	rm -f $(OBJS)
-
-%.o: %.c
-	$(CC) -c $< -o $@ $(CFLAGS)
+	rm -rf (SRCS:.c=.o) (DISPLAY_SRCS:.c=.o)
