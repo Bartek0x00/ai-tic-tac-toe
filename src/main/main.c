@@ -6,32 +6,34 @@
 
 int main(void)
 {
-	void *display = initDisplay(); 
+	initDisplay(); 
 	unsigned char input = '\0';
 	char buffer[32] = {'\0'};
 	unsigned int remainingMoves = 9;
 	unsigned int gameOver = 0;
+	
 	register Board board = Board_EMPTY;	
 	srand(time(0));
 	Color playerColor = (rand() % 2) + 1;
 
 	if (playerColor == RED) {
-		showText(display, "You're red cross X\n", RED);
+		showText("You're red cross X\n", RED);
 		goto User;
-	}
+	} else
+		showText("You're blue circle O\n", BLUE);
 
 	while (1) {
-		drawDisplay(display, board);
+		drawDisplay(board);
 		Color winner = Board_GetWinner(board);
 
 		if (winner) {
-			showText(display, "You've lost\n", RED);
+			showText("You've lost\n", RED);
 			gameOver = 1;
 			goto User;
 		}
 
 		if (!remainingMoves) {
-			showText(display, "It's a tie\n", BLUE);	
+			showText("It's a tie\n", BLUE);	
 			gameOver = 1;
 			goto User;
 		}
@@ -51,12 +53,12 @@ int main(void)
 			"Solve time: %ldns\n", 
 			(endTime.tv_nsec - startTime.tv_nsec)
 		);
-		showText(display, buffer, NONE);
+		showText(buffer, NONE);
 
 		if (!(--remainingMoves) || Board_GetWinner(board)) continue;
 
 	User:
-		drawDisplay(display, board); 
+		drawDisplay(board); 
 		while(!getEvent(&input));
 
 		if (input == 'q') break;
@@ -69,6 +71,6 @@ int main(void)
 		}		
 	}
 
-	deleteDisplay(display);
+	deleteDisplay();
 	return 0;
 }

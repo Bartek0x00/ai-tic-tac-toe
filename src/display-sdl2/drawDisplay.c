@@ -3,10 +3,8 @@
 #include "display.h"
 #include "../AI/Board.h"
 
-void drawDisplay(void *displayRaw, Board board)
-{
-	Display *display = (Display *)displayRaw;
-	
+void drawDisplay(Board board)
+{	
 	SDL_Rect background = {
 		0, 
 		0,
@@ -14,8 +12,8 @@ void drawDisplay(void *displayRaw, Board board)
 		WINDOW_SIZE
 	};
 	SDL_RenderCopy(
-		display->renderer,
-		display->background,
+		display.renderer,
+		display.background,
 		NULL,
 		&background
 	);
@@ -33,10 +31,10 @@ void drawDisplay(void *displayRaw, Board board)
 
 			if (Board_Get(board, count)) {
 				SDL_RenderCopy(
-					display->renderer,
+					display.renderer,
 					Board_Get(board, count) == 1 ? \
-					display->cross : \
-					display->circle,
+					display.cross : \
+					display.circle,
 					NULL,
 					&cell
 				);
@@ -44,5 +42,5 @@ void drawDisplay(void *displayRaw, Board board)
 			count++;
 		}
 	}
-	SDL_RenderPresent(display->renderer);
+	SDL_RenderPresent(display.renderer);
 }

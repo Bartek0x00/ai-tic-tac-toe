@@ -5,7 +5,7 @@
 #define T_RED "\033[38;5;1m"
 #define T_BLUE "\033[38;5;4m"
 
-void showText(void *display, char *text, Color color)
+void showText(char *text, Color color)
 {
 	char *tColor = "";
 

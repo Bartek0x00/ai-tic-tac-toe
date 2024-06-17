@@ -9,7 +9,7 @@ EXEC:=tictactoe
 
 all: help
 
-help:
+help: 
 	@echo "Usage: make [sdl2|tui]"
 
 tui: DISPLAY_SRCS = $(wildcard src/display-tui/*.c)

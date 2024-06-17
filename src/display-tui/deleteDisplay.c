@@ -1,4 +1,4 @@
-void deleteDisplay(void *display)
+void deleteDisplay(void)
 {
 	
 }

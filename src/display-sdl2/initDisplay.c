@@ -5,6 +5,21 @@
 #include "window.h"
 #include "images.h"
 #include "font.h"
+#include "display.h"
+
+void terminate(int stage)
+{
+	if (stage > 3)
+		SDL_DestroyRenderer(display.renderer);
+	if (stage > 2)
+		SDL_DestroyWindow(display.window);
+	if (stage > 1)
+		TTF_Quit();
+	if (stage > 0)
+		IMG_Quit();
+	if (stage >= 0)
+		SDL_Quit();
+}
 
 static SDL_Texture *loadTexture(SDL_Window *window,
 								SDL_Renderer *renderer, 
@@ -18,15 +33,10 @@ static SDL_Texture *loadTexture(SDL_Window *window,
 	);
 	if (!surface) {
 		SDL_Log(
-			"Failed to load surface %s: %s", 
-			name, 
+			"Failed to load surface %s: %s", name, 
 			SDL_GetError()
 		);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		IMG_Quit();
-		TTF_Quit();
-		SDL_Quit();
+		terminate(4);
 		exit(-1);
 	}
 
@@ -37,22 +47,17 @@ static SDL_Texture *loadTexture(SDL_Window *window,
 	SDL_FreeSurface(surface);
 	if(!texture) {
 		SDL_Log(
-			"Failed to load texture %s: %s",
-			name,
+			"Failed to load texture %s: %s", name,
 			SDL_GetError()
 		);
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		IMG_Quit();
-		TTF_Quit();
-		SDL_Quit();
+		terminate(4);
 		exit(-1);
 	}
 
 	return texture;
 }
 
-void *initDisplay(void)
+void initDisplay(void)
 {
 	if (SDL_Init(SDL_INIT_VIDEO)) {
 		SDL_Log(
@@ -66,7 +71,7 @@ void *initDisplay(void)
 			"Failed to init IMG: %s\n",
 			SDL_GetError()
 		);
-		SDL_Quit();
+		terminate(0);
 		exit(-1);
 	}
 	if (TTF_Init() == -1) {
@@ -74,8 +79,7 @@ void *initDisplay(void)
 			"Failed to init TTF: %s\n",
 			SDL_GetError()
 		);
-		IMG_Quit();
-		SDL_Quit();
+		terminate(1);
 		exit(-1);
 	}
 
@@ -92,9 +96,7 @@ void *initDisplay(void)
 			"Failed to create window: %s\n", 
 			SDL_GetError()
 		);
-		IMG_Quit();
-		TTF_Quit();
-		SDL_Quit();
+		terminate(2);
 		exit(-1);
 	}
 	
@@ -108,10 +110,7 @@ void *initDisplay(void)
 			"Failed to create renderer: %s\n", 
 			SDL_GetError()
 		);
-		SDL_DestroyWindow(window);
-		IMG_Quit();
-		TTF_Quit();
-		SDL_Quit();
+		terminate(3);
 		exit(-1);
 	}
 	
@@ -140,43 +139,20 @@ void *initDisplay(void)
 	SDL_RWops *rw = SDL_RWFromMem(font_ttf, font_ttf_len);
 	if (!rw) {
 		SDL_Log("Failed to make rw: %s\n", SDL_GetError());
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		TTF_Quit();
-		IMG_Quit();
-		SDL_Quit();
+		terminate(4);
 		exit(-1);
 	}
 	TTF_Font *font = TTF_OpenFontRW(rw, 1, 64);
 	if (!font) {
 		SDL_Log("Failed to load font: %s\n", TTF_GetError());
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		TTF_Quit();
-		IMG_Quit();
-		SDL_Quit();
+		terminate(4);
 		exit(-1);
 	}
 
-	Display *display = malloc(sizeof(Display));
-	if (!display) {
-		SDL_Log("Failed to allocate memory for the display\n");
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		IMG_Quit();
-		TTF_Quit();
-		SDL_Quit();
-		exit(-1);
-	}
-
-	*display = (Display){
-		.window = window,
-		.renderer = renderer,
-		.background = background,
-		.circle = circle,
-		.cross = cross,
-		.font = font
-	};
-
-	return (void *)display;
+	display.window = window;
+	display.renderer = renderer;
+	display.background = background;
+	display.circle = circle;
+	display.cross = cross;
+	display.font = font;
 }

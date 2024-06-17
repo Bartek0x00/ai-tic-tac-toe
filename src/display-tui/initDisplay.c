@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void *initDisplay(void)
+void initDisplay(void)
 {
 	puts(
 		"\tTIC-TAC-TOE\n"
@@ -11,5 +11,4 @@ void *initDisplay(void)
 		"---|---|---\n"
 		" 6 | 7 | 8 \n"
 	);
-	return NULL;	
 }

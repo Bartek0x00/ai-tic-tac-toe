@@ -5,13 +5,13 @@
 static inline char getChar(Board board, int index)
 {
 	switch(Board_Get(board, index)) {
-	case RED: return 'X';
-	case BLUE: return 'O';
-	default: return ' ';
+		case RED: return 'X';
+		case BLUE: return 'O';
+		default: return ' ';
 	}
 }
 
-void drawDisplay(void *display, Board board)
+void drawDisplay(Board board)
 {
 	printf(
 		" %c | %c | %c \n"

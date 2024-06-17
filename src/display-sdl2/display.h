@@ -13,4 +13,6 @@ typedef struct {
 	TTF_Font *font;
 } Display;
 
+extern Display display;
+
 #endif // _DISPLAY_H
