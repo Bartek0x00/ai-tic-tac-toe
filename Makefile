@@ -10,7 +10,7 @@ EXEC:=tictactoe
 all: help
 
 help: 
-	@echo "Usage: make [sdl2|tui]"
+	@echo "Usage: make [sdl2|tui|web]"
 
 tui: DISPLAY_SRCS = $(wildcard src/display-tui/*.c)
 tui: link
@@ -18,6 +18,12 @@ tui: link
 sdl2: DISPLAY_SRCS = $(wildcard src/display-sdl2/*.c)
 sdl2: CFLAGS += -lSDL2 -lSDL2_image -lSDL2_ttf
 sdl2: link
+
+web: CC = emcc
+web: DISPLAY_SRCS = $(wildcard src/display-sdl2/*.c)
+web: CFLAGS += -sASYNCIFY=1 -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sUSE_SDL_TTF=2 --use-port=sdl2_image:formats=png --shell-file src/display-web/blank.html
+web: EXEC = docs/index.html
+web: link
 
 link:
 	$(CC) $(CFLAGS) -o $(EXEC) $(SRCS) $(DISPLAY_SRCS)

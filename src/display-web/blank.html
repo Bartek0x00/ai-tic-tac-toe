@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>AI-TIC-TAC-TOE</title>
+		<style>
+			body, html {
+				height: 100%;
+			}
+			body {
+				background-color: #282828;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+    		.emscripten { 
+				padding-right: 0;
+				margin-left: auto; 
+				margin-right: auto; 
+				display: block; 
+			}
+      		/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      		canvas.emscripten { 
+				border: 0px none; 
+				background-color: black;
+			}
+    	</style>
+  	</head>
+  	<body>
+		<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    	<script type="text/javascript">
+      		var Module = {
+        		canvas: (function() {return document.getElementById('canvas');})()
+			};
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>

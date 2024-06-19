@@ -16,12 +16,6 @@
 	((i7) << 2) | \
 	((i8) << 0))
 
-const Board Board_EMPTY = BOARD(
-	N, N, N, 
-	N, N, N, 
-	N, N, N  
-);
-
 const Board Board_WIN_RED[8] = { 
 	BOARD( 
 		R, R, R, 

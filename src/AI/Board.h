@@ -5,7 +5,8 @@
 
 typedef unsigned int Board;
 
-extern const Board Board_EMPTY;
+#define Board_EMPTY (Board)0
+
 extern const Board Board_WIN_RED[8];
 extern const Board Board_WIN_BLUE[8];
 
