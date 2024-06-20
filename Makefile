@@ -21,7 +21,7 @@ sdl2: link
 
 web: CC = emcc
 web: DISPLAY_SRCS = $(wildcard src/display-sdl2/*.c)
-web: CFLAGS += -sASYNCIFY=1 -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sUSE_SDL_TTF=2 --use-port=sdl2_image:formats=png --shell-file src/display-web/blank.html
+web: CFLAGS += -sASYNCIFY=1 -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sUSE_SDL_TTF=2 -sSDL2_IMAGE_FORMATS='["png"]' --shell-file src/display-web/blank.html
 web: EXEC = docs/index.html
 web: link
 
