@@ -31,7 +31,8 @@
   	</head>
   	<body>
 		<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-    	<script type="text/javascript">
+    	<button onclick="location.reload()">Reload</button>
+		<script type="text/javascript">
       		var Module = {
         		canvas: (function() {return document.getElementById('canvas');})()
 			};
