@@ -6,8 +6,7 @@
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
-#include <emscripten/html5.h>
-#endif 
+#endif //__EMSCRIPTEN__
 	
 static unsigned int isPlayerMove = 0;
 static unsigned char input = '\0';
@@ -39,12 +38,9 @@ static void Algorithm(void)
 	}
 
 #ifdef __EMSCRIPTEN__
-	double startTime = emscripten_performance_now();
+	sprintf(buffer, "Solve time: <1ms\n");
 
 	board = solve(board, (playerColor ^ 0b11));
-
-	double endTime = emscripten_performance_now();
-	long elapsedTime = (long)((endTime - startTime) * 1e6);
 #else
 	struct timespec startTime, endTime;
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
@@ -53,12 +49,13 @@ static void Algorithm(void)
 		
 	clock_gettime(CLOCK_MONOTONIC, &endTime);
 	long elapsedTime = (endTime.tv_nsec - startTime.tv_nsec);
-#endif
+	
 	sprintf(
 		buffer,
 		"Solve time: %ldns\n", 
 		elapsedTime
 	);
+#endif //__EMSCRIPTEN__
 	showText(buffer, NONE);
 
 	if (!(--remainingMoves) || Board_GetWinner(board)) 
@@ -72,7 +69,7 @@ static void User(void)
 	{
 #ifdef __EMSCRIPTEN__
 		emscripten_sleep(1);
-#endif
+#endif //__EMSCRIPTEN__
 	}
 
 	if (input == 'q') Exit();
